@@ -65,3 +65,14 @@ process.on('SIGINT', async () => {
 });
 
 module.exports = app;
+
+// Route pour vérifier les variables d'environnement
+app.get('/env', (req, res) => {
+  res.json({
+    NODE_ENV: process.env.NODE_ENV || 'non défini',
+    FRONTEND_URL: process.env.FRONTEND_URL || 'non défini',
+    DATABASE_URL: process.env.DATABASE_URL ? '✅ Définie' : '❌ Non définie',
+    JWT_SECRET: process.env.JWT_SECRET ? '✅ Défini' : '❌ Non défini',
+    PORT: process.env.PORT || '5000',
+  });
+});
