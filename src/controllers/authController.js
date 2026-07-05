@@ -91,4 +91,47 @@ const me = async (req, res) => {
   }
 };
 
-module.exports = { register, login, me };
+const updateProfile = async (req, res) => {
+  try {
+    const { name, currentPassword, newPassword } = req.body;
+    const userId = req.user.id;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'Utilisateur introuvable' });
+    }
+
+    const dataToUpdate = { updatedAt: new Date() };
+
+    if (name) {
+      dataToUpdate.name = name;
+    }
+
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ status: 'error', message: 'Le mot de passe actuel est requis pour le changer' });
+      }
+      const validPassword = await bcrypt.compare(currentPassword, user.password);
+      if (!validPassword) {
+        return res.status(401).json({ status: 'error', message: 'Mot de passe actuel incorrect' });
+      }
+      if (newPassword.length < 8) {
+        return res.status(400).json({ status: 'error', message: 'Le nouveau mot de passe doit contenir au moins 8 caractères' });
+      }
+      dataToUpdate.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: dataToUpdate,
+      select: { id: true, email: true, name: true, role: true, createdAt: true },
+    });
+
+    res.json({ status: 'ok', user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Erreur lors de la mise à jour du profil' });
+  }
+};
+
+module.exports = { register, login, me, updateProfile };
