@@ -14,5 +14,5 @@ services:
       - key: JWT_REFRESH_SECRET
         sync: false
       - key: FRONTEND_URL
-        value: https://afishop.vercel.app
+        value: https://afishop-y9ww.vercel.app
     plan: free
