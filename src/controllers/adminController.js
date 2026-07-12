@@ -115,4 +115,44 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getStats, getUsers, updateUser, deleteUser };
+// ============================================================
+// INIT PREMIER ADMIN
+// ============================================================
+const initAdmin = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ status: 'error', message: 'Email requis' });
+    }
+
+    // Vérifier qu'aucun admin n'existe déjà
+    const adminCount = await prisma.user.count({ where: { role: 'admin' } });
+    if (adminCount > 0) {
+      return res.status(403).json({ status: 'error', message: 'Un administrateur existe déjà' });
+    }
+
+    // Vérifier que l'utilisateur existe
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'Aucun utilisateur trouvé avec cet email' });
+    }
+
+    // Promouvoir en admin
+    const updated = await prisma.user.update({
+      where: { email },
+      data: { role: 'admin' },
+    });
+
+    res.json({
+      status: 'ok',
+      message: `Utilisateur ${updated.email} promu administrateur`,
+      user: { id: updated.id, email: updated.email, name: updated.name, role: updated.role },
+    });
+  } catch (error) {
+    console.error('❌ Erreur initAdmin:', error);
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+};
+
+module.exports = { getStats, getUsers, updateUser, deleteUser, initAdmin };

@@ -5,10 +5,14 @@ const {
   getUsers,
   updateUser,
   deleteUser,
+  initAdmin,
 } = require('../controllers/adminController');
 const { authenticate, authorize } = require('../middlewares/authMiddleware');
 
-// Toutes les routes admin sont protégées par authenticate + authorize('admin')
+// Route publique : premier admin (ne fonctionne que s'il n'y a aucun admin)
+router.post('/init', initAdmin);
+
+// Toutes les routes admin ci-dessous sont protégées par authenticate + authorize('admin')
 router.use(authenticate);
 router.use(authorize('admin'));
 
