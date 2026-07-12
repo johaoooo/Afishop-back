@@ -1,10 +1,10 @@
 const { prisma } = require('../config/database');
 
 // POST /api/orders - créer une commande (protégée)
-// Body attendu: { items: [{ productId, quantity }, ...] }
+// Body attendu: { items: [{ productId, quantity }, ...], street, city, postalCode, country, phone }
 const createOrder = async (req, res) => {
   try {
-    const { items } = req.body;
+    const { items, street, city, postalCode, country, phone } = req.body;
     const userId = req.user.id;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -43,7 +43,11 @@ const createOrder = async (req, res) => {
           userId,
           total,
           status: 'pending',
-          updatedAt: new Date(),
+          street,
+          city,
+          postalCode,
+          country,
+          phone,
           OrderItem: { create: orderItemsData },
         },
         include: { OrderItem: { include: { Product: true } } },

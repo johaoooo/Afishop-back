@@ -152,6 +152,11 @@ exports.Prisma.OrderScalarFieldEnum = {
   userId: 'userId',
   total: 'total',
   status: 'status',
+  street: 'street',
+  city: 'city',
+  postalCode: 'postalCode',
+  country: 'country',
+  phone: 'phone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -197,6 +202,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   name: 'name',
   role: 'role',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
