@@ -47,6 +47,7 @@ app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/trainings', require('./routes/trainingRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/cloudinary', require('./routes/cloudinaryRoutes'));
 
 // Routes de test
 app.get('/health', (req, res) => {
