@@ -1,6 +1,8 @@
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { prisma } = require('../config/database');
+const { sendPasswordReset } = require('../services/email');
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -134,4 +136,53 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { register, login, me, updateProfile };
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ status: 'error', message: 'Email requis' });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.json({ status: 'ok', message: 'Si cet email existe, un lien de réinitialisation a été envoyé.' });
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiry = new Date(Date.now() + 3600000);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { resetToken: token, resetTokenExpiry: expiry },
+    });
+
+    await sendPasswordReset(email, token);
+    res.json({ status: 'ok', message: 'Email envoyé ! Vérifiez votre boîte de réception.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Erreur lors de l\'envoi de l\'email' });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { email, token, newPassword } = req.body;
+    if (!email || !token || !newPassword) {
+      return res.status(400).json({ status: 'error', message: 'Email, token et nouveau mot de passe requis' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || user.resetToken !== token || !user.resetTokenExpiry || user.resetTokenExpiry < new Date()) {
+      return res.status(400).json({ status: 'error', message: 'Lien invalide ou expiré' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashedPassword, resetToken: null, resetTokenExpiry: null },
+    });
+
+    res.json({ status: 'ok', message: 'Mot de passe réinitialisé avec succès' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Erreur lors de la réinitialisation' });
+  }
+};
+
+module.exports = { register, login, me, updateProfile, forgotPassword, resetPassword };

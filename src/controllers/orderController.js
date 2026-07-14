@@ -1,4 +1,5 @@
 const { prisma } = require('../config/database');
+const { sendOrderConfirmation } = require('../services/email');
 
 // POST /api/orders - créer une commande (protégée)
 // Body attendu: { items: [{ productId, quantity }, ...], street, city, postalCode, country, phone }
@@ -55,6 +56,19 @@ const createOrder = async (req, res) => {
 
       return newOrder;
     });
+
+    try {
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+      if (user) {
+        const items = order.OrderItem.map((oi) => ({
+          productId: oi.productId,
+          quantity: oi.quantity,
+          price: oi.price,
+          name: oi.Product?.name,
+        }));
+        await sendOrderConfirmation(user.email, { ...order, items }, user.name).catch(() => {});
+      }
+    } catch (_) {}
 
     res.status(201).json({ status: 'ok', order });
   } catch (error) {
