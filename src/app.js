@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -48,6 +49,8 @@ app.use('/api/trainings', require('./routes/trainingRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/cloudinary', require('./routes/cloudinaryRoutes'));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/api/upload', require('./routes/uploadRoutes'));
 
 // Routes de test
 app.get('/health', (req, res) => {
