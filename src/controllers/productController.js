@@ -3,7 +3,10 @@ const { prisma } = require('../config/database');
 // GET /api/products - liste publique avec filtres optionnels
 const getProducts = async (req, res) => {
   try {
-    const { category, brand, search } = req.query;
+    const { category, brand, search, page: pageStr, limit: limitStr } = req.query;
+    const page = Math.max(1, parseInt(pageStr) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(limitStr) || 12));
+    const skip = (page - 1) * limit;
 
     const where = {};
     if (category) where.category = category;
@@ -15,12 +18,19 @@ const getProducts = async (req, res) => {
       ];
     }
 
-    const products = await prisma.product.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-    });
+    const [products, total] = await Promise.all([
+      prisma.product.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take: limit }),
+      prisma.product.count({ where }),
+    ]);
 
-    res.json({ status: 'ok', count: products.length, products });
+    res.json({
+      status: 'ok',
+      count: products.length,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      products,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', message: 'Erreur lors de la récupération des produits' });

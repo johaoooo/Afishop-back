@@ -11,4 +11,20 @@ const loginSchema = z.object({
   password: z.string().min(1, 'Mot de passe requis'),
 });
 
-module.exports = { registerSchema, loginSchema };
+const updateProfileSchema = z.object({
+  name: z.string().min(2).max(100).optional(),
+  currentPassword: z.string().min(1).optional(),
+  newPassword: z.string().min(8, 'Le mot de passe doit contenir au moins 8 caractères').optional(),
+});
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email('Email invalide'),
+});
+
+const resetPasswordSchema = z.object({
+  email: z.string().email('Email invalide'),
+  token: z.string().min(1, 'Token requis'),
+  newPassword: z.string().min(8, 'Le mot de passe doit contenir au moins 8 caractères'),
+});
+
+module.exports = { registerSchema, loginSchema, updateProfileSchema, forgotPasswordSchema, resetPasswordSchema };
