@@ -76,7 +76,7 @@ const downloadReceipt = async (req, res) => {
           .text('AFI Collection', logoBuffer ? 160 : 50, 50)
           .fontSize(9)
           .fillColor('#666666')
-          .text('Cotonou, Bénin', logoBuffer ? 160 : 50, 75)
+          .text('Abomey-Calavi, Bénin', logoBuffer ? 160 : 50, 75)
           .text('contact@aficollection.com', logoBuffer ? 160 : 50, 88);
 
         doc
