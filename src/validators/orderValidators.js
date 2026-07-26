@@ -9,7 +9,7 @@ const createOrderSchema = z.object({
   ).min(1, 'La commande doit contenir au moins un article'),
   street: z.string().min(2, 'L\'adresse est requise').max(500),
   city: z.string().min(2, 'La ville est requise').max(200),
-  postalCode: z.string().min(1, 'Le code postal est requis').max(20),
+  postalCode: z.string().max(20).optional().or(z.literal('')),
   country: z.string().min(1, 'Le pays est requis').max(100),
   phone: z.string().min(5, 'Le téléphone est requis').max(30),
 });
