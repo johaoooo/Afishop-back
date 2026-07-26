@@ -84,7 +84,7 @@ const me = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      select: { id: true, email: true, name: true, role: true, createdAt: true },
+      select: { id: true, email: true, name: true, role: true, avatar: true, createdAt: true },
     });
     res.json({ status: 'ok', user });
   } catch (error) {
@@ -95,7 +95,7 @@ const me = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { name, currentPassword, newPassword } = req.body;
+    const { name, avatar, currentPassword, newPassword } = req.body;
     const userId = req.user.id;
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -107,6 +107,10 @@ const updateProfile = async (req, res) => {
 
     if (name) {
       dataToUpdate.name = name;
+    }
+
+    if (avatar !== undefined) {
+      dataToUpdate.avatar = avatar;
     }
 
     if (newPassword) {
@@ -126,7 +130,7 @@ const updateProfile = async (req, res) => {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: dataToUpdate,
-      select: { id: true, email: true, name: true, role: true, createdAt: true },
+      select: { id: true, email: true, name: true, role: true, avatar: true, createdAt: true },
     });
 
     res.json({ status: 'ok', user: updatedUser });

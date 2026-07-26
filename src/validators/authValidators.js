@@ -13,6 +13,7 @@ const loginSchema = z.object({
 
 const updateProfileSchema = z.object({
   name: z.string().min(2).max(100).optional(),
+  avatar: z.string().optional().nullable(),
   currentPassword: z.string().min(1).optional(),
   newPassword: z.string().min(8, 'Le mot de passe doit contenir au moins 8 caractères').optional(),
 });
