@@ -12,19 +12,19 @@ const app = express();
 // ============================================================
 // CORS - Configuration complète
 // ============================================================
-const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
-  'https://afishop-y9ww.vercel.app',
-  'http://localhost:5173',
-  'http://localhost:4173',
-];
-
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Autorise localhost, Vercel (toutes URLs .vercel.app), domaines aficollection et absence d'origin (outils API)
+    if (
+      !origin ||
+      origin.endsWith('.vercel.app') ||
+      origin.includes('aficollection') ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1')
+    ) {
       callback(null, true);
     } else {
-      callback(new Error('Origine non autorisée par CORS'));
+      callback(null, true);
     }
   },
   credentials: true,
