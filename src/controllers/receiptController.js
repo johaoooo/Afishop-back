@@ -51,8 +51,8 @@ const downloadReceipt = async (req, res) => {
     if (order.userId !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({ status: 'error', message: 'Accès refusé' });
     }
-    if (!['paid', 'shipped', 'delivered'].includes(order.status)) {
-      return res.status(400).json({ status: 'error', message: 'Le reçu n\'est disponible que pour une commande payée' });
+    if (order.status === 'cancelled') {
+      return res.status(400).json({ status: 'error', message: 'Le reçu n\'est pas disponible pour une commande annulée' });
     }
 
     const logoBuffer = await fetchLogoSafely();
