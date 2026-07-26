@@ -41,7 +41,7 @@ const register = async (req, res) => {
     res.status(201).json({
       status: 'ok',
       token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: { id: user.id, email: user.email, name: user.name, role: user.role, avatar: user.avatar },
     });
   } catch (error) {
     console.error(error);
@@ -72,7 +72,7 @@ const login = async (req, res) => {
     res.json({
       status: 'ok',
       token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: { id: user.id, email: user.email, name: user.name, role: user.role, avatar: user.avatar },
     });
   } catch (error) {
     console.error(error);
