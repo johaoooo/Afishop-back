@@ -185,6 +185,30 @@ async function seed() {
   } else {
     console.log(`[Seed] ${count} produits déjà présents en base.`);
   }
+
+  // Seed default Admin Account if not existing
+  const bcrypt = require('bcrypt');
+  const adminEmail = 'admin@aficollection.com';
+  const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
+  const hashedPassword = await bcrypt.hash('Admin@Afi2026!', 10);
+
+  if (!existingAdmin) {
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        name: 'Admin AFI Collection',
+        password: hashedPassword,
+        role: 'admin',
+        updatedAt: new Date()
+      }
+    });
+    console.log('[Seed] Compte administrateur créé : admin@aficollection.com');
+  } else if (existingAdmin.role !== 'admin') {
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: { role: 'admin', updatedAt: new Date() }
+    });
+  }
 }
 
 seed()
