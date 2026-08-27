@@ -179,7 +179,7 @@ async function seed() {
   if (count === 0) {
     console.log('[Seed] Insertion des produits par défaut...');
     for (const p of defaultProducts) {
-      await prisma.product.create({ data: p });
+      await prisma.product.create({ data: { ...p, updatedAt: new Date() } });
     }
     console.log(`[Seed] ${defaultProducts.length} produits insérés avec succès.`);
   } else {
