@@ -12,6 +12,8 @@ const generateToken = (user) => {
   );
 };
 
+const ADMIN_EMAILS = ['admin@aficollection.com', 'josephdehazounde@gmail.com'];
+
 const register = async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -26,12 +28,14 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const role = ADMIN_EMAILS.includes(email.toLowerCase()) ? 'admin' : 'user';
 
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         name,
+        role,
         updatedAt: new Date(),
       },
     });
@@ -65,6 +69,14 @@ const login = async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ status: 'error', message: 'Identifiants invalides' });
+    }
+
+    if (ADMIN_EMAILS.includes(user.email.toLowerCase()) && user.role !== 'admin') {
+      user.role = 'admin';
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { role: 'admin', updatedAt: new Date() },
+      });
     }
 
     const token = generateToken(user);

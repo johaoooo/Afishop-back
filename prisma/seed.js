@@ -186,28 +186,34 @@ async function seed() {
     console.log(`[Seed] ${count} produits déjà présents en base.`);
   }
 
-  // Seed default Admin Account if not existing
+  // Seed default Admin Accounts
   const bcrypt = require('bcrypt');
-  const adminEmail = 'admin@aficollection.com';
-  const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
   const hashedPassword = await bcrypt.hash('Admin@Afi2026!', 10);
+  const adminAccounts = [
+    { email: 'admin@aficollection.com', name: 'Admin AFI Collection' },
+    { email: 'josephdehazounde@gmail.com', name: 'Dehazounde Joseph' }
+  ];
 
-  if (!existingAdmin) {
-    await prisma.user.create({
-      data: {
-        email: adminEmail,
-        name: 'Admin AFI Collection',
-        password: hashedPassword,
-        role: 'admin',
-        updatedAt: new Date()
-      }
-    });
-    console.log('[Seed] Compte administrateur créé : admin@aficollection.com');
-  } else if (existingAdmin.role !== 'admin') {
-    await prisma.user.update({
-      where: { email: adminEmail },
-      data: { role: 'admin', updatedAt: new Date() }
-    });
+  for (const acc of adminAccounts) {
+    const existing = await prisma.user.findUnique({ where: { email: acc.email } });
+    if (!existing) {
+      await prisma.user.create({
+        data: {
+          email: acc.email,
+          name: acc.name,
+          password: hashedPassword,
+          role: 'admin',
+          updatedAt: new Date()
+        }
+      });
+      console.log(`[Seed] Compte administrateur créé : ${acc.email}`);
+    } else {
+      await prisma.user.update({
+        where: { email: acc.email },
+        data: { password: hashedPassword, role: 'admin', updatedAt: new Date() }
+      });
+      console.log(`[Seed] Compte administrateur mis à jour : ${acc.email}`);
+    }
   }
 }
 
