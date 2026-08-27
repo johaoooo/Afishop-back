@@ -1,193 +1,189 @@
 const { prisma } = require('../src/config/database');
+const bcrypt = require('bcrypt');
 
-const defaultProducts = [
+const realProducts = [
   {
-    name: "Sac AFISAC Royal",
-    description: "Sac en macramé de luxe, pièce unique",
-    price: 35000,
+    name: "Sac Macramé Bohème Prestige",
+    description: "Sublime sac en macramé tressé main avec fil de coton naturel haute résistance. Motifs géométriques exclusifs, finitions raffinées et anses ergonomiques. Idéal pour un look bohème chic au quotidien comme en soirée.",
+    price: 26000,
     category: "sacs",
     brand: "afisac",
-    image: "/afi.jpeg",
-    stock: 8
-  },
-  {
-    name: "Tissu Faso Dan Fani",
-    description: "Tissu traditionnel au mètre",
-    price: 15000,
-    category: "tissus",
-    brand: "afi-tissu",
-    image: "/afi2.jpeg",
-    stock: 50
-  },
-  {
-    name: "Tissu Macramé",
-    description: "Tissu décoratif",
-    price: 20000,
-    category: "tissus",
-    brand: "afi-tissu",
-    image: "/afi2.jpeg",
-    stock: 30
-  },
-  {
-    name: "Bracelet Macramé",
-    description: "Bracelet tissé main",
-    price: 5000,
-    category: "accessoires",
-    brand: "afi-mode",
-    image: "/afi7.jpeg",
-    stock: 25
-  },
-  {
-    name: "Collier Perles",
-    description: "Collier en perles artisanales",
-    price: 12000,
-    category: "accessoires",
-    brand: "afi-mode",
-    image: "/afi7.jpeg",
-    stock: 15
-  },
-  {
-    name: "Porte-Clés Macramé Fleur",
-    description: "Petit accessoire tressé avec anneau doré, idéal pour offrir.",
-    price: 3000,
-    category: "porte-clés",
-    brand: "afisac",
-    image: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=600",
-    stock: 22
-  },
-  {
-    name: "Valise de Voyage Motif Tradition",
-    description: "Valise cabine habillée de motif en batik et teinture artisanale.",
-    price: 45000,
-    category: "mode",
-    brand: "afi-mode",
-    image: "https://images.unsplash.com/photo-1565026057447-ba90a3d07d6b?w=600",
-    stock: 27
-  },
-  {
-    name: "Rideau en Macramé Grande Taille",
-    description: "Séparateur de pièce ou rideau de fenêtre en fil d’allure bohème.",
-    price: 38000,
-    category: "rideau",
-    brand: "afi-deco",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600",
-    stock: 35
-  },
-  {
-    name: "Panier Tissé Macramé Boho",
-    description: "Magnifique panier fait main en coton naturel et jute pour décoration ou rangement.",
-    price: 18500,
-    category: "macramé",
-    brand: "afisac",
-    image: "https://images.unsplash.com/photo-1590736969955-71cc94801759?w=600",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563927/sac4_sozq69.png",
     stock: 12
   },
   {
-    name: "Set de Table Tissé Artisanal",
-    description: "Set de 4 dessous de plats en macramé tressé à la main, style élégant et chaleureux.",
-    price: 14000,
-    category: "macrame",
+    name: "Sac Cabas Macramé Élégance",
+    description: "Grand cabas artisanal confectionné à la main. Spacieux, robuste et léger, il allie parfaitement le charme des fibres naturelles et l'élégance moderne. Parfait pour vos sorties, vos cours ou vos moments de détente.",
+    price: 29000,
+    category: "sacs",
     brand: "afisac",
-    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600",
-    stock: 20
-  },
-  {
-    name: "Pagne Teint Motif Indigo Royal",
-    description: "Étoffes en coton 100% teintes à la main avec motifs géométriques traditionnels.",
-    price: 28000,
-    category: "teinture",
-    brand: "afi-mode",
-    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600",
-    stock: 15
-  },
-  {
-    name: "Echarpe Pagne Tissé Traditionnel",
-    description: "Écharpe douce et légère teinté artisanalement aux pigments naturels.",
-    price: 16500,
-    category: "pagne",
-    brand: "afi-mode",
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563927/sac2_ctb3wb.png",
     stock: 10
   },
   {
-    name: "Miroir Mural Cadre Macramé",
-    description: "Miroir circulaire habillé d’un tressage macramé sophistiqué pour salon ou chambre.",
-    price: 24500,
-    category: "décoration",
-    brand: "afi-deco",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600",
-    stock: 7
+    name: "Sac à Main Macramé Royal",
+    description: "Pièce maîtresse de notre collection AFISAC. Un tressage macramé sophistiqué rehaussé de perles et de détails minutieux. Conçu par nos artisanes pour sublimer vos tenues de cérémonie et grandes occasions.",
+    price: 35000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563925/sac1_hdywxz.png",
+    stock: 8
   },
   {
-    name: "Centre de Table Tissé Soleil",
-    description: "Pièce maîtresse en fibre végétale et fil de coton pour habiller vos tables de fête.",
-    price: 19000,
-    category: "decoration",
-    brand: "afi-deco",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600",
+    name: "Chemise Homme Motif Pagne Teint",
+    description: "Chemise contemporaine confectionnée en coton 100% avec empiècements en pagne teint artisanal aux pigments naturels. Coupe moderne, col structuré et confort exceptionnel pour un style africain affirmé.",
+    price: 22000,
+    category: "mode",
+    brand: "afi-mode",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563922/chem4_rmeuif.jpg",
+    stock: 15
+  },
+  {
+    name: "Chemise Manches Courtes Batik Royal",
+    description: "Chemise casual chic en tissu batik travaillé à la cire et teint à la main. Motifs authentiques uniques, matière respirante et finitions de haute couture pour un porté agréable tout au long de la journée.",
+    price: 20000,
+    category: "mode",
+    brand: "afi-mode",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563921/chem2_k44jqe.jpg",
     stock: 14
   },
   {
-    name: "Sac à Main Pagne Tissé & Cuir",
-    description: "Sac à main structuré en pagne tissé fait main avec anses en cuir véritable.",
-    price: 32000,
-    category: "accessoire",
+    name: "Pochette Macramé & Tissage Fin",
+    description: "Élégante pochette à main tressée en macramé avec rabat travaillé. Doublure intérieure soignée et fermeture sécurisée. L'accessoire indispensable pour emporter vos essentiels avec distinction.",
+    price: 18000,
+    category: "sacs",
     brand: "afisac",
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563919/sa1_prkynm.jpg",
+    stock: 16
+  },
+  {
+    name: "Sac Bandoulière Macramé Floral",
+    description: "Sac bandoulière compact orné de motifs en relief inspirés de la flore tropicale. Confortable à porter en bandoulière ou à l'épaule, il apporte une touche artisanale lumineuse à toutes vos tenues.",
+    price: 24000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563919/sa2_wgsn0h.jpg",
+    stock: 11
+  },
+  {
+    name: "Chemise Moderne en Pagne Artisanal",
+    description: "Création originale mariant élégance urbaine et authenticité béninoise. Tissu doux et résistant, boutons naturels et finitions irréprochables pour un vêtement durable et plein de caractère.",
+    price: 24000,
+    category: "mode",
+    brand: "afi-mode",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563921/chem1_ebwwcn.jpg",
+    stock: 12
+  },
+  {
+    name: "Pagne Teint Artisanal Motif Indigo",
+    description: "Étoffe traditionnelle 100% coton de qualité supérieure, teinte à la main selon les techniques ancestrales de l'indigo. Motifs géométriques symboliques, couleur profonde et éclat durable.",
+    price: 25000,
+    category: "tissus",
+    brand: "afi-mode",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563945/pagne_utvisy.png",
+    stock: 20
+  },
+  {
+    name: "Suspension Murale Macramé Bohème",
+    description: "Magnifique tenture murale tressée à la main sur support en bois naturel. Apporte instantanément chaleur, texture et authenticité à votre salon, bureau ou chambre.",
+    price: 19500,
+    category: "décoration",
+    brand: "afi-deco",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1782719675/tetete_mc3g0r.jpg",
+    stock: 10
+  },
+  {
+    name: "Étoffe de Pagne Teinté Traditionnel",
+    description: "Pièce de tissu exclusive aux nuances riches et contrastées. Confectionnée avec des pigments écologiques durables, idéale pour la confection de tenues sur mesure ou d'accessoires de luxe.",
+    price: 28000,
+    category: "tissus",
+    brand: "afi-mode",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1782720165/pgn_w8qoer.jpg",
+    stock: 18
+  },
+  {
+    name: "Set d'Accessoires Déco & Table Macramé",
+    description: "Ensemble d'accessoires décoratifs tressés en macramé. Parfait pour habiller vos tables de réception ou apporter une touche naturelle raffinée à votre intérieur.",
+    price: 16000,
+    category: "décoration",
+    brand: "afi-deco",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1782720381/pp_dq4fz8.jpg",
+    stock: 15
+  },
+  {
+    name: "Tissu Pagne Tissé Traditionnel de Luxe",
+    description: "Tissu artisanal d'exception tissé au métier traditionnel à bras. Fibres épaisses de coton pur garantissant une tenue parfaite pour grands boubous, vestes ou tailleurs.",
+    price: 32000,
+    category: "tissus",
+    brand: "afi-tissu",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1782907386/tiss_msfbhc.jpg",
+    stock: 14
+  },
+  {
+    name: "Sac Macramé Design Contemporain",
+    description: "Sac à main moderne revisitant le tressage traditionnel avec un jeu de textures audacieux. Anses confortables et structure renforcée pour une durabilité maximale au quotidien.",
+    price: 27000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1784014275/WhatsApp_Image_2026-07-14_at_08.29.54_rsd6nr.jpg",
     stock: 9
   },
   {
-    name: "Graines de Sésame Bio (500g)",
-    description: "Sésame blanc décortiqué de haute qualité, riche en nutriments et minéraux.",
-    price: 3500,
-    category: "sésame",
-    brand: "afi-agro",
-    image: "https://images.unsplash.com/photo-1509358271058-acd02cc93898?w=600",
-    stock: 50
+    name: "Sac Macramé Perles & Finitions Dorées",
+    description: "Chef-d'œuvre artisanal associant fil de coton soyeux et incrustations de perles dorées. Une pièce de créateur rare qui sublime vos tenues de soirée et galas.",
+    price: 38000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573438/WhatsApp_Image_2026-08-01_at_08.30.44_kxtvvh.jpg",
+    stock: 7
   },
   {
-    name: "Chips de Sésame Caramélisées",
-    description: "Croustillants de sésame sucrés au miel naturel, un en-cas délicieux et sain.",
-    price: 2000,
-    category: "sesame",
-    brand: "afi-agro",
-    image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=600",
-    stock: 100
+    name: "Pochette de Soirée Macramé Tressé",
+    description: "Pochette chic confectionnée entièrement à la main. Format compact et élégant avec chaînette amovible, idéale pour garder vos essentiels en toute sécurité.",
+    price: 21000,
+    category: "accessoires",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573439/WhatsApp_Image_2026-08-01_at_08.30.46_fpield.jpg",
+    stock: 12
   },
   {
-    name: "Farine de Soja Enrichie (1kg)",
-    description: "Farine de soja artisanale bio, idéale pour la pâtisserie et les bouillies nourrissantes.",
-    price: 4000,
-    category: "soja",
-    brand: "afi-agro",
-    image: "https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?w=600",
-    stock: 40
+    name: "Grand Cabas Macramé Artisanal",
+    description: "Grand sac cabas tressé en corde de coton naturelle renforcée. Grande capacité de rangement et résistance éprouvée pour vous accompagner partout avec élégance.",
+    price: 32000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573441/WhatsApp_Image_2026-08-01_at_08.30.44_1_xv745q.jpg",
+    stock: 8
   },
   {
-    name: "Épices & Assaisonnements au Soja",
-    description: "Mélange d’épices et protéines de soja torréfiées pour relever tous vos plats.",
-    price: 2500,
-    category: "soja",
-    brand: "afi-agro",
-    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600",
-    stock: 60
+    name: "Sac Seau Macramé Style Bohème",
+    description: "Sac seau iconique avec fermeture à cordon tressé et fond rigide. Style nomade chic indémodable, pratique et léger, réalisé avec le plus grand soin par nos artisans.",
+    price: 28000,
+    category: "sacs",
+    brand: "afisac",
+    image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.43_q8m0uj.jpg",
+    stock: 10
   }
 ];
 
 async function seed() {
-  const count = await prisma.product.count();
-  if (count === 0) {
-    console.log('[Seed] Insertion des produits par défaut...');
-    for (const p of defaultProducts) {
-      await prisma.product.create({ data: { ...p, updatedAt: new Date() } });
-    }
-    console.log(`[Seed] ${defaultProducts.length} produits insérés avec succès.`);
-  } else {
-    console.log(`[Seed] ${count} produits déjà présents en base.`);
+  console.log('[Seed] Remplacement complet par les 18 vrais produits AFI Collection...');
+  
+  // Suppression des anciens produits de test pour garantir le catalogue officiel
+  await prisma.orderItem.deleteMany({});
+  await prisma.product.deleteMany({});
+
+  for (const p of realProducts) {
+    await prisma.product.create({
+      data: {
+        ...p,
+        updatedAt: new Date()
+      }
+    });
   }
+  console.log(`[Seed] ${realProducts.length} vrais produits insérés avec succès !`);
 
   // Seed default Admin Accounts
-  const bcrypt = require('bcrypt');
   const hashedPassword = await bcrypt.hash('Admin@Afi2026!', 10);
   const adminAccounts = [
     { email: 'admin@aficollection.com', name: 'Admin AFI Collection' },
