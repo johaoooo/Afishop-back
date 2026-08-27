@@ -18,9 +18,12 @@ const authenticate = (req, res, next) => {
   }
 };
 
+const ADMIN_EMAILS = ['admin@aficollection.com', 'josephdehazounde@gmail.com'];
+
 const authorize = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    const isSpecialAdmin = req.user && req.user.email && ADMIN_EMAILS.includes(req.user.email.toLowerCase());
+    if (!roles.includes(req.user.role) && !isSpecialAdmin) {
       return res.status(403).json({ status: 'error', message: 'Accès refusé' });
     }
     next();

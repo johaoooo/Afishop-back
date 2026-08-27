@@ -201,4 +201,40 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { register, login, me, updateProfile, forgotPassword, resetPassword };
+const setupAdmin = async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash('Admin@Afi2026!', 10);
+    const emails = ['admin@aficollection.com', 'josephdehazounde@gmail.com'];
+    const updatedUsers = [];
+
+    for (const email of emails) {
+      const user = await prisma.user.upsert({
+        where: { email },
+        update: { role: 'admin', password: hashedPassword, updatedAt: new Date() },
+        create: {
+          email,
+          name: email.startsWith('admin') ? 'Admin AFI' : 'Dehazounde Joseph',
+          password: hashedPassword,
+          role: 'admin',
+          updatedAt: new Date(),
+        },
+      });
+      updatedUsers.push({ id: user.id, email: user.email, role: user.role });
+    }
+
+    res.json({ status: 'ok', message: 'Administrateurs configurés avec succès', users: updatedUsers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  me,
+  updateProfile,
+  forgotPassword,
+  resetPassword,
+  setupAdmin,
+};
