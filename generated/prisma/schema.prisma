@@ -94,6 +94,7 @@ model User {
   password         String
   name             String
   role             String    @default("user")
+  avatar           String?
   isActive         Boolean   @default(true)
   resetToken       String?
   resetTokenExpiry DateTime?

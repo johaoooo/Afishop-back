@@ -37,37 +37,7 @@ const verifyPayment = async (req, res) => {
       return res.json({ status: 'ok', message: 'Commande déjà confirmée payée', order });
     }
 
-    // 2. Vérification du paiement (FedaPay / Kkiapay / Sandbox)
-    const isFedaPaySandbox = process.env.FEDAPAY_SANDBOX !== 'false';
-    const fedapaySecretKey = process.env.FEDAPAY_SECRET_KEY || 'sk_sandbox_wtOxPL085MeAxQfxr6a_f4Uh';
-    const fedapayBaseUrl = isFedaPaySandbox ? 'https://sandbox-api.fedapay.com/v1' : 'https://api.fedapay.com/v1';
-
-    // Verification FedaPay
-    if (String(transactionId).startsWith('fedapay_') || String(transactionId).startsWith('test_') || !isNaN(Number(transactionId))) {
-      const axios = require('axios');
-      try {
-        const fedaRes = await axios.get(`${fedapayBaseUrl}/transactions/${transactionId}`, {
-          headers: { Authorization: `Bearer ${fedapaySecretKey}` }
-        });
-        const fedaTx = fedaRes.data['v1/transaction'] || fedaRes.data.transaction || fedaRes.data;
-        if (fedaTx && (fedaTx.status === 'approved' || fedaTx.status === 'transferred')) {
-          const updatedOrder = await prisma.order.update({
-            where: { id: order.id },
-            data: { status: 'paid', updatedAt: new Date() },
-          });
-          return res.json({ status: 'ok', message: 'Paiement FedaPay confirmé', order: updatedOrder });
-        }
-      } catch (fedaError) {
-        console.warn('[FedaPay Verify Warning]:', fedaError.message);
-        if (isSandbox || isFedaPaySandbox) {
-          const updatedOrder = await prisma.order.update({
-            where: { id: order.id },
-            data: { status: 'paid', updatedAt: new Date() },
-          });
-          return res.json({ status: 'ok', message: 'Paiement FedaPay Sandbox validé', order: updatedOrder });
-        }
-      }
-    }
+    // 2. Vérification du paiement KKiaPay (SDK ou fallback Sandbox)
 
     // Verification Kkiapay
     let transaction = null;

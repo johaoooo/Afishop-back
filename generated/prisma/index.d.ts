@@ -8373,6 +8373,7 @@ export namespace Prisma {
     password: string | null
     name: string | null
     role: string | null
+    avatar: string | null
     isActive: boolean | null
     resetToken: string | null
     resetTokenExpiry: Date | null
@@ -8386,6 +8387,7 @@ export namespace Prisma {
     password: string | null
     name: string | null
     role: string | null
+    avatar: string | null
     isActive: boolean | null
     resetToken: string | null
     resetTokenExpiry: Date | null
@@ -8399,6 +8401,7 @@ export namespace Prisma {
     password: number
     name: number
     role: number
+    avatar: number
     isActive: number
     resetToken: number
     resetTokenExpiry: number
@@ -8422,6 +8425,7 @@ export namespace Prisma {
     password?: true
     name?: true
     role?: true
+    avatar?: true
     isActive?: true
     resetToken?: true
     resetTokenExpiry?: true
@@ -8435,6 +8439,7 @@ export namespace Prisma {
     password?: true
     name?: true
     role?: true
+    avatar?: true
     isActive?: true
     resetToken?: true
     resetTokenExpiry?: true
@@ -8448,6 +8453,7 @@ export namespace Prisma {
     password?: true
     name?: true
     role?: true
+    avatar?: true
     isActive?: true
     resetToken?: true
     resetTokenExpiry?: true
@@ -8548,6 +8554,7 @@ export namespace Prisma {
     password: string
     name: string
     role: string
+    avatar: string | null
     isActive: boolean
     resetToken: string | null
     resetTokenExpiry: Date | null
@@ -8580,6 +8587,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     role?: boolean
+    avatar?: boolean
     isActive?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
@@ -8595,6 +8603,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     role?: boolean
+    avatar?: boolean
     isActive?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
@@ -8608,6 +8617,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     role?: boolean
+    avatar?: boolean
     isActive?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
@@ -8621,6 +8631,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     role?: boolean
+    avatar?: boolean
     isActive?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
@@ -8628,7 +8639,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "isActive" | "resetToken" | "resetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "avatar" | "isActive" | "resetToken" | "resetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Order?: boolean | User$OrderArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -8647,6 +8658,7 @@ export namespace Prisma {
       password: string
       name: string
       role: string
+      avatar: string | null
       isActive: boolean
       resetToken: string | null
       resetTokenExpiry: Date | null
@@ -9081,6 +9093,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
+    readonly avatar: FieldRef<"User", 'String'>
     readonly isActive: FieldRef<"User", 'Boolean'>
     readonly resetToken: FieldRef<"User", 'String'>
     readonly resetTokenExpiry: FieldRef<"User", 'DateTime'>
@@ -9635,6 +9648,7 @@ export namespace Prisma {
     password: 'password',
     name: 'name',
     role: 'role',
+    avatar: 'avatar',
     isActive: 'isActive',
     resetToken: 'resetToken',
     resetTokenExpiry: 'resetTokenExpiry',
@@ -10228,6 +10242,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    avatar?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
     resetToken?: StringNullableFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -10242,6 +10257,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     role?: SortOrder
+    avatar?: SortOrderInput | SortOrder
     isActive?: SortOrder
     resetToken?: SortOrderInput | SortOrder
     resetTokenExpiry?: SortOrderInput | SortOrder
@@ -10259,6 +10275,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    avatar?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
     resetToken?: StringNullableFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -10273,6 +10290,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     role?: SortOrder
+    avatar?: SortOrderInput | SortOrder
     isActive?: SortOrder
     resetToken?: SortOrderInput | SortOrder
     resetTokenExpiry?: SortOrderInput | SortOrder
@@ -10294,6 +10312,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
+    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
     resetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -10825,6 +10844,7 @@ export namespace Prisma {
     password: string
     name: string
     role?: string
+    avatar?: string | null
     isActive?: boolean
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
@@ -10839,6 +10859,7 @@ export namespace Prisma {
     password: string
     name: string
     role?: string
+    avatar?: string | null
     isActive?: boolean
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
@@ -10852,6 +10873,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10866,6 +10888,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10880,6 +10903,7 @@ export namespace Prisma {
     password: string
     name: string
     role?: string
+    avatar?: string | null
     isActive?: boolean
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
@@ -10892,6 +10916,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10905,6 +10930,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11402,6 +11428,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     role?: SortOrder
+    avatar?: SortOrder
     isActive?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
@@ -11419,6 +11446,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     role?: SortOrder
+    avatar?: SortOrder
     isActive?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
@@ -11432,6 +11460,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     role?: SortOrder
+    avatar?: SortOrder
     isActive?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
@@ -11841,6 +11870,7 @@ export namespace Prisma {
     password: string
     name: string
     role?: string
+    avatar?: string | null
     isActive?: boolean
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
@@ -11854,6 +11884,7 @@ export namespace Prisma {
     password: string
     name: string
     role?: string
+    avatar?: string | null
     isActive?: boolean
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
@@ -11905,6 +11936,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11918,6 +11950,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
