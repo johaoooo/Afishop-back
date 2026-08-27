@@ -9,6 +9,10 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendPasswordReset(email, token) {
+  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+    console.log('ℹ️ [Email Service] SMTP non configuré, email de réinitialisation ignoré.');
+    return;
+  }
   const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
   try {
     await transporter.sendMail({
@@ -24,6 +28,10 @@ async function sendPasswordReset(email, token) {
 }
 
 async function sendOrderConfirmation(email, order, userName) {
+  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+    console.log('ℹ️ [Email Service] SMTP non configuré, email de confirmation ignoré.');
+    return;
+  }
   const itemsHtml = order.items?.map((item) =>
     `<tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151;">${item.name || `Produit #${item.productId}`}</td><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151;text-align:center;">x${item.quantity}</td><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151;text-align:right;">${(item.price * item.quantity).toLocaleString('fr-FR')} F</td></tr>`
   ).join('');

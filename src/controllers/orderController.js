@@ -57,8 +57,8 @@ const createOrder = async (req, res) => {
       return newOrder;
     });
 
-    try {
-      const user = await prisma.user.findUnique({ where: { id: userId } });
+    // Envoi de l'email de confirmation en arrière-plan (non bloquant)
+    prisma.user.findUnique({ where: { id: userId } }).then((user) => {
       if (user) {
         const items = order.OrderItem.map((oi) => ({
           productId: oi.productId,
@@ -66,9 +66,9 @@ const createOrder = async (req, res) => {
           price: oi.price,
           name: oi.Product?.name,
         }));
-        await sendOrderConfirmation(user.email, { ...order, items }, user.name).catch(() => {});
+        sendOrderConfirmation(user.email, { ...order, items }, user.name).catch(() => {});
       }
-    } catch (_) {}
+    }).catch(() => {});
 
     res.status(201).json({ status: 'ok', order });
   } catch (error) {
