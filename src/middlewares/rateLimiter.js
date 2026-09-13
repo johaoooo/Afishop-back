@@ -18,4 +18,13 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { authLimiter, apiLimiter };
+// Limite stricte pour l'assistant IA (coût API par appel)
+const assistantLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // 20 messages max par IP sur la fenêtre
+  message: { status: 'error', message: 'Trop de messages, réessayez dans quelques minutes' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+module.exports = { authLimiter, apiLimiter, assistantLimiter };

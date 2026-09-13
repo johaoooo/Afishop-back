@@ -48,6 +48,7 @@ app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/trainings', require('./routes/trainingRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/assistant', require('./routes/assistantRoutes'));
 app.use('/api/cloudinary', require('./routes/cloudinaryRoutes'));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/upload', require('./routes/uploadRoutes'));
