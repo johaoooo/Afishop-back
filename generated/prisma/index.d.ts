@@ -10331,7 +10331,7 @@ export namespace Prisma {
     image: string
     accent: string
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type EventUncheckedCreateInput = {
@@ -10346,7 +10346,7 @@ export namespace Prisma {
     image: string
     accent: string
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type EventUpdateInput = {
@@ -10390,7 +10390,7 @@ export namespace Prisma {
     image: string
     accent: string
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type EventUpdateManyMutationInput = {
@@ -10661,7 +10661,7 @@ export namespace Prisma {
     image: string
     stock?: number
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     OrderItem?: OrderItemCreateNestedManyWithoutProductInput
   }
 
@@ -10675,7 +10675,7 @@ export namespace Prisma {
     image: string
     stock?: number
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     OrderItem?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -10716,7 +10716,7 @@ export namespace Prisma {
     image: string
     stock?: number
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type ProductUpdateManyMutationInput = {
@@ -12026,7 +12026,7 @@ export namespace Prisma {
     image: string
     stock?: number
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type ProductUncheckedCreateWithoutOrderItemInput = {
@@ -12039,7 +12039,7 @@ export namespace Prisma {
     image: string
     stock?: number
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type ProductCreateOrConnectWithoutOrderItemInput = {
