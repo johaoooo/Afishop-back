@@ -1,5 +1,14 @@
 const { prisma } = require('../config/database');
 
+// La BDD stocke les modules en String[] : on normalise
+// les objets { title } éventuels vers leur titre.
+const normalizeModules = (modules) => {
+  if (!Array.isArray(modules)) return [];
+  return modules
+    .map((m) => (typeof m === 'string' ? m.trim() : (m && m.title ? String(m.title).trim() : '')))
+    .filter(Boolean);
+};
+
 const getTrainings = async (req, res) => {
   try {
     const trainings = await prisma.training.findMany({ orderBy: { createdAt: 'desc' } });
@@ -30,7 +39,7 @@ const createTraining = async (req, res) => {
     const training = await prisma.training.create({
       data: {
         title, description, duration, price,
-        modules: modules || [],
+        modules: normalizeModules(modules),
         students: students ? parseInt(students) : 0,
         image: image || '',
         color: color || '',
@@ -52,7 +61,7 @@ const updateTraining = async (req, res) => {
 
     const training = await prisma.training.update({
       where: { id: parseInt(id) },
-      data: { ...req.body, updatedAt: new Date() },
+      data: { ...req.body, ...(req.body.modules !== undefined ? { modules: normalizeModules(req.body.modules) } : {}), updatedAt: new Date() },
     });
     res.json({ status: 'ok', training });
   } catch (error) {
