@@ -167,11 +167,13 @@ const realProducts = [
 ];
 
 async function seed() {
-  console.log('[Seed] Remplacement complet par les 18 vrais produits AFI Collection...');
-  
-  // Suppression des anciens produits de test pour garantir le catalogue officiel
-  await prisma.orderItem.deleteMany({});
-  await prisma.product.deleteMany({});
+  console.log('[Seed] Vérification du catalogue produits...');
+  const existingCount = await prisma.product.count();
+
+  if (existingCount > 0) {
+    console.log(`[Seed] ${existingCount} produits existants conservés (pas d'écrasement).`);
+  } else {
+  console.log('[Seed] Base vide : insertion des 18 vrais produits AFI Collection...');
 
   for (const p of realProducts) {
     await prisma.product.create({
@@ -182,6 +184,7 @@ async function seed() {
     });
   }
   console.log(`[Seed] ${realProducts.length} vrais produits insérés avec succès !`);
+  }
 
   // Seed default Admin Accounts
   const hashedPassword = await bcrypt.hash('Admin@Afi2026!', 10);
