@@ -38,7 +38,7 @@ const createTraining = async (req, res) => {
     }
     const training = await prisma.training.create({
       data: {
-        title, description, duration, price,
+        title, description, duration, price: String(price),
         modules: normalizeModules(modules),
         students: students ? parseInt(students) : 0,
         image: image || '',
@@ -59,9 +59,13 @@ const updateTraining = async (req, res) => {
     const existing = await prisma.training.findUnique({ where: { id: parseInt(id) } });
     if (!existing) return res.status(404).json({ status: 'error', message: 'Formation introuvable' });
 
+    const { modules: rawModules, price: rawPrice, ...rest } = req.body;
     const training = await prisma.training.update({
       where: { id: parseInt(id) },
-      data: { ...req.body, ...(req.body.modules !== undefined ? { modules: normalizeModules(req.body.modules) } : {}), updatedAt: new Date() },
+      data: { ...rest,
+        ...(rawPrice !== undefined ? { price: String(rawPrice) } : {}),
+        ...(rawModules !== undefined ? { modules: normalizeModules(rawModules) } : {}),
+        updatedAt: new Date() },
     });
     res.json({ status: 'ok', training });
   } catch (error) {
