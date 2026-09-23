@@ -35,19 +35,21 @@ model Message {
 }
 
 model Order {
-  id         Int         @id @default(autoincrement())
-  userId     Int
-  total      Int
-  status     String      @default("pending")
-  street     String?
-  city       String?
-  postalCode String?
-  country    String?
-  phone      String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  User       User        @relation(fields: [userId], references: [id])
-  OrderItem  OrderItem[]
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  total         Int
+  status        String      @default("pending")
+  paymentMethod String?
+  paymentRef    String?
+  street        String?
+  city          String?
+  postalCode    String?
+  country       String?
+  phone         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  User          User        @relation(fields: [userId], references: [id])
+  OrderItem     OrderItem[]
 }
 
 model OrderItem {
@@ -89,16 +91,20 @@ model Training {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
-  email            String    @unique
-  password         String
-  name             String
-  role             String    @default("user")
-  avatar           String?
-  isActive         Boolean   @default(true)
-  resetToken       String?
-  resetTokenExpiry DateTime?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  Order            Order[]
+  id                  Int       @id @default(autoincrement())
+  email               String    @unique
+  password            String?
+  name                String
+  role                String    @default("user")
+  avatar              String?
+  googleId            String?   @unique
+  isActive            Boolean   @default(true)
+  isVerified          Boolean   @default(false)
+  verificationToken   String?   @unique
+  verificationExpires DateTime?
+  resetToken          String?
+  resetTokenExpiry    DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  Order               Order[]
 }

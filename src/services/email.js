@@ -56,4 +56,49 @@ async function sendOrderConfirmation(email, order, userName) {
   }
 }
 
-module.exports = { sendPasswordReset, sendOrderConfirmation };
+async function sendVerificationEmail(email, token, userName) {
+  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+    console.log('ℹ️ [Email Service] SMTP non configuré, email de vérification ignoré.');
+    return;
+  }
+  const verifyUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verifier-email?token=${token}&email=${encodeURIComponent(email)}`;
+  try {
+    await transporter.sendMail({
+      from: `"AFI Collection" <${process.env.SMTP_EMAIL}>`,
+      to: email,
+      subject: 'Activez votre compte - AFI Collection',
+      html: `<div style="font-family: Arial, sans-serif; max-width: 520px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div style="background: #1a6b3c; padding: 28px 24px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 22px; letter-spacing: 0.05em; font-weight: 700;">AFI COLLECTION</h1>
+          <p style="color: #d1fae5; margin: 6px 0 0; font-size: 13px;">L'Élégance Artisanale Africaine</p>
+        </div>
+        <div style="padding: 32px 24px; color: #1f2937;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px; color: #111827;">Bienvenue, ${userName || 'cher client'} !</h2>
+          <p style="font-size: 14px; line-height: 1.6; color: #4b5563; margin-bottom: 24px;">
+            Merci pour votre inscription sur <strong>AFI Collection</strong>. Pour des raisons de sécurité et pour finaliser l'ouverture de votre compte, veuillez confirmer votre adresse email en cliquant sur le bouton ci-dessous :
+          </p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${verifyUrl}" style="display: inline-block; background: #1a6b3c; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: bold; padding: 14px 32px; border-radius: 8px; box-shadow: 0 4px 12px rgba(26, 107, 60, 0.3);">
+              Confirmer mon adresse email
+            </a>
+          </div>
+          <p style="font-size: 12px; line-height: 1.5; color: #6b7280; margin-top: 24px; border-top: 1px solid #f3f4f6; padding-top: 16px;">
+            Si le bouton ne fonctionne pas, vous pouvez copier et coller ce lien dans votre navigateur :<br>
+            <a href="${verifyUrl}" style="color: #1a6b3c; word-break: break-all;">${verifyUrl}</a>
+          </p>
+          <p style="font-size: 12px; color: #9ca3af; margin-top: 12px;">
+            Ce lien est valable pendant 24 heures. Si vous n'êtes pas à l'origine de cette inscription, ignorez simplement ce message.
+          </p>
+        </div>
+        <div style="background: #f9fafb; padding: 16px 24px; text-align: center; font-size: 11px; color: #9ca3af; border-top: 1px solid #e5e7eb;">
+          © ${new Date().getFullYear()} Maison AFI Collection. Tous droits réservés.
+        </div>
+      </div>`,
+    });
+    console.log('✅ Verification email sent to', email);
+  } catch (err) {
+    console.error('❌ Verification email error:', err.message);
+  }
+}
+
+module.exports = { sendPasswordReset, sendOrderConfirmation, sendVerificationEmail };

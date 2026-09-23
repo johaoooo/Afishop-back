@@ -3748,6 +3748,8 @@ export namespace Prisma {
     userId: number | null
     total: number | null
     status: string | null
+    paymentMethod: string | null
+    paymentRef: string | null
     street: string | null
     city: string | null
     postalCode: string | null
@@ -3762,6 +3764,8 @@ export namespace Prisma {
     userId: number | null
     total: number | null
     status: string | null
+    paymentMethod: string | null
+    paymentRef: string | null
     street: string | null
     city: string | null
     postalCode: string | null
@@ -3776,6 +3780,8 @@ export namespace Prisma {
     userId: number
     total: number
     status: number
+    paymentMethod: number
+    paymentRef: number
     street: number
     city: number
     postalCode: number
@@ -3804,6 +3810,8 @@ export namespace Prisma {
     userId?: true
     total?: true
     status?: true
+    paymentMethod?: true
+    paymentRef?: true
     street?: true
     city?: true
     postalCode?: true
@@ -3818,6 +3826,8 @@ export namespace Prisma {
     userId?: true
     total?: true
     status?: true
+    paymentMethod?: true
+    paymentRef?: true
     street?: true
     city?: true
     postalCode?: true
@@ -3832,6 +3842,8 @@ export namespace Prisma {
     userId?: true
     total?: true
     status?: true
+    paymentMethod?: true
+    paymentRef?: true
     street?: true
     city?: true
     postalCode?: true
@@ -3933,6 +3945,8 @@ export namespace Prisma {
     userId: number
     total: number
     status: string
+    paymentMethod: string | null
+    paymentRef: string | null
     street: string | null
     city: string | null
     postalCode: string | null
@@ -3966,6 +3980,8 @@ export namespace Prisma {
     userId?: boolean
     total?: boolean
     status?: boolean
+    paymentMethod?: boolean
+    paymentRef?: boolean
     street?: boolean
     city?: boolean
     postalCode?: boolean
@@ -3983,6 +3999,8 @@ export namespace Prisma {
     userId?: boolean
     total?: boolean
     status?: boolean
+    paymentMethod?: boolean
+    paymentRef?: boolean
     street?: boolean
     city?: boolean
     postalCode?: boolean
@@ -3998,6 +4016,8 @@ export namespace Prisma {
     userId?: boolean
     total?: boolean
     status?: boolean
+    paymentMethod?: boolean
+    paymentRef?: boolean
     street?: boolean
     city?: boolean
     postalCode?: boolean
@@ -4013,6 +4033,8 @@ export namespace Prisma {
     userId?: boolean
     total?: boolean
     status?: boolean
+    paymentMethod?: boolean
+    paymentRef?: boolean
     street?: boolean
     city?: boolean
     postalCode?: boolean
@@ -4022,7 +4044,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "total" | "status" | "street" | "city" | "postalCode" | "country" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "total" | "status" | "paymentMethod" | "paymentRef" | "street" | "city" | "postalCode" | "country" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
     OrderItem?: boolean | Order$OrderItemArgs<ExtArgs>
@@ -4046,6 +4068,8 @@ export namespace Prisma {
       userId: number
       total: number
       status: string
+      paymentMethod: string | null
+      paymentRef: string | null
       street: string | null
       city: string | null
       postalCode: string | null
@@ -4482,6 +4506,8 @@ export namespace Prisma {
     readonly userId: FieldRef<"Order", 'Int'>
     readonly total: FieldRef<"Order", 'Int'>
     readonly status: FieldRef<"Order", 'String'>
+    readonly paymentMethod: FieldRef<"Order", 'String'>
+    readonly paymentRef: FieldRef<"Order", 'String'>
     readonly street: FieldRef<"Order", 'String'>
     readonly city: FieldRef<"Order", 'String'>
     readonly postalCode: FieldRef<"Order", 'String'>
@@ -8374,7 +8400,11 @@ export namespace Prisma {
     name: string | null
     role: string | null
     avatar: string | null
+    googleId: string | null
     isActive: boolean | null
+    isVerified: boolean | null
+    verificationToken: string | null
+    verificationExpires: Date | null
     resetToken: string | null
     resetTokenExpiry: Date | null
     createdAt: Date | null
@@ -8388,7 +8418,11 @@ export namespace Prisma {
     name: string | null
     role: string | null
     avatar: string | null
+    googleId: string | null
     isActive: boolean | null
+    isVerified: boolean | null
+    verificationToken: string | null
+    verificationExpires: Date | null
     resetToken: string | null
     resetTokenExpiry: Date | null
     createdAt: Date | null
@@ -8402,7 +8436,11 @@ export namespace Prisma {
     name: number
     role: number
     avatar: number
+    googleId: number
     isActive: number
+    isVerified: number
+    verificationToken: number
+    verificationExpires: number
     resetToken: number
     resetTokenExpiry: number
     createdAt: number
@@ -8426,7 +8464,11 @@ export namespace Prisma {
     name?: true
     role?: true
     avatar?: true
+    googleId?: true
     isActive?: true
+    isVerified?: true
+    verificationToken?: true
+    verificationExpires?: true
     resetToken?: true
     resetTokenExpiry?: true
     createdAt?: true
@@ -8440,7 +8482,11 @@ export namespace Prisma {
     name?: true
     role?: true
     avatar?: true
+    googleId?: true
     isActive?: true
+    isVerified?: true
+    verificationToken?: true
+    verificationExpires?: true
     resetToken?: true
     resetTokenExpiry?: true
     createdAt?: true
@@ -8454,7 +8500,11 @@ export namespace Prisma {
     name?: true
     role?: true
     avatar?: true
+    googleId?: true
     isActive?: true
+    isVerified?: true
+    verificationToken?: true
+    verificationExpires?: true
     resetToken?: true
     resetTokenExpiry?: true
     createdAt?: true
@@ -8551,11 +8601,15 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: number
     email: string
-    password: string
+    password: string | null
     name: string
     role: string
     avatar: string | null
+    googleId: string | null
     isActive: boolean
+    isVerified: boolean
+    verificationToken: string | null
+    verificationExpires: Date | null
     resetToken: string | null
     resetTokenExpiry: Date | null
     createdAt: Date
@@ -8588,7 +8642,11 @@ export namespace Prisma {
     name?: boolean
     role?: boolean
     avatar?: boolean
+    googleId?: boolean
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: boolean
+    verificationExpires?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
     createdAt?: boolean
@@ -8604,7 +8662,11 @@ export namespace Prisma {
     name?: boolean
     role?: boolean
     avatar?: boolean
+    googleId?: boolean
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: boolean
+    verificationExpires?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
     createdAt?: boolean
@@ -8618,7 +8680,11 @@ export namespace Prisma {
     name?: boolean
     role?: boolean
     avatar?: boolean
+    googleId?: boolean
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: boolean
+    verificationExpires?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
     createdAt?: boolean
@@ -8632,14 +8698,18 @@ export namespace Prisma {
     name?: boolean
     role?: boolean
     avatar?: boolean
+    googleId?: boolean
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: boolean
+    verificationExpires?: boolean
     resetToken?: boolean
     resetTokenExpiry?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "avatar" | "isActive" | "resetToken" | "resetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "avatar" | "googleId" | "isActive" | "isVerified" | "verificationToken" | "verificationExpires" | "resetToken" | "resetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Order?: boolean | User$OrderArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -8655,11 +8725,15 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       email: string
-      password: string
+      password: string | null
       name: string
       role: string
       avatar: string | null
+      googleId: string | null
       isActive: boolean
+      isVerified: boolean
+      verificationToken: string | null
+      verificationExpires: Date | null
       resetToken: string | null
       resetTokenExpiry: Date | null
       createdAt: Date
@@ -9094,7 +9168,11 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
     readonly avatar: FieldRef<"User", 'String'>
+    readonly googleId: FieldRef<"User", 'String'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly isVerified: FieldRef<"User", 'Boolean'>
+    readonly verificationToken: FieldRef<"User", 'String'>
+    readonly verificationExpires: FieldRef<"User", 'DateTime'>
     readonly resetToken: FieldRef<"User", 'String'>
     readonly resetTokenExpiry: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
@@ -9586,6 +9664,8 @@ export namespace Prisma {
     userId: 'userId',
     total: 'total',
     status: 'status',
+    paymentMethod: 'paymentMethod',
+    paymentRef: 'paymentRef',
     street: 'street',
     city: 'city',
     postalCode: 'postalCode',
@@ -9649,7 +9729,11 @@ export namespace Prisma {
     name: 'name',
     role: 'role',
     avatar: 'avatar',
+    googleId: 'googleId',
     isActive: 'isActive',
+    isVerified: 'isVerified',
+    verificationToken: 'verificationToken',
+    verificationExpires: 'verificationExpires',
     resetToken: 'resetToken',
     resetTokenExpiry: 'resetTokenExpiry',
     createdAt: 'createdAt',
@@ -9925,6 +10009,8 @@ export namespace Prisma {
     userId?: IntFilter<"Order"> | number
     total?: IntFilter<"Order"> | number
     status?: StringFilter<"Order"> | string
+    paymentMethod?: StringNullableFilter<"Order"> | string | null
+    paymentRef?: StringNullableFilter<"Order"> | string | null
     street?: StringNullableFilter<"Order"> | string | null
     city?: StringNullableFilter<"Order"> | string | null
     postalCode?: StringNullableFilter<"Order"> | string | null
@@ -9941,6 +10027,8 @@ export namespace Prisma {
     userId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    paymentRef?: SortOrderInput | SortOrder
     street?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     postalCode?: SortOrderInput | SortOrder
@@ -9960,6 +10048,8 @@ export namespace Prisma {
     userId?: IntFilter<"Order"> | number
     total?: IntFilter<"Order"> | number
     status?: StringFilter<"Order"> | string
+    paymentMethod?: StringNullableFilter<"Order"> | string | null
+    paymentRef?: StringNullableFilter<"Order"> | string | null
     street?: StringNullableFilter<"Order"> | string | null
     city?: StringNullableFilter<"Order"> | string | null
     postalCode?: StringNullableFilter<"Order"> | string | null
@@ -9976,6 +10066,8 @@ export namespace Prisma {
     userId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    paymentRef?: SortOrderInput | SortOrder
     street?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     postalCode?: SortOrderInput | SortOrder
@@ -9998,6 +10090,8 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"Order"> | number
     total?: IntWithAggregatesFilter<"Order"> | number
     status?: StringWithAggregatesFilter<"Order"> | string
+    paymentMethod?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    paymentRef?: StringNullableWithAggregatesFilter<"Order"> | string | null
     street?: StringNullableWithAggregatesFilter<"Order"> | string | null
     city?: StringNullableWithAggregatesFilter<"Order"> | string | null
     postalCode?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -10239,11 +10333,15 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     name?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
+    isVerified?: BoolFilter<"User"> | boolean
+    verificationToken?: StringNullableFilter<"User"> | string | null
+    verificationExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     resetToken?: StringNullableFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -10254,11 +10352,15 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     name?: SortOrder
     role?: SortOrder
     avatar?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    isVerified?: SortOrder
+    verificationToken?: SortOrderInput | SortOrder
+    verificationExpires?: SortOrderInput | SortOrder
     resetToken?: SortOrderInput | SortOrder
     resetTokenExpiry?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -10269,29 +10371,37 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
+    googleId?: string
+    verificationToken?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     name?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
+    isVerified?: BoolFilter<"User"> | boolean
+    verificationExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     resetToken?: StringNullableFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     Order?: OrderListRelationFilter
-  }, "id" | "email">
+  }, "id" | "email" | "googleId" | "verificationToken">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     name?: SortOrder
     role?: SortOrder
     avatar?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    isVerified?: SortOrder
+    verificationToken?: SortOrderInput | SortOrder
+    verificationExpires?: SortOrderInput | SortOrder
     resetToken?: SortOrderInput | SortOrder
     resetTokenExpiry?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -10309,11 +10419,15 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    isVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    verificationToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    verificationExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     resetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     resetTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -10506,6 +10620,8 @@ export namespace Prisma {
   export type OrderCreateInput = {
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -10522,6 +10638,8 @@ export namespace Prisma {
     userId: number
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -10535,6 +10653,8 @@ export namespace Prisma {
   export type OrderUpdateInput = {
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10551,6 +10671,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10566,6 +10688,8 @@ export namespace Prisma {
     userId: number
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -10578,6 +10702,8 @@ export namespace Prisma {
   export type OrderUpdateManyMutationInput = {
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10592,6 +10718,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10841,11 +10969,15 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     email: string
-    password: string
+    password?: string | null
     name: string
     role?: string
     avatar?: string | null
+    googleId?: string | null
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: string | null
+    verificationExpires?: Date | string | null
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
     createdAt?: Date | string
@@ -10856,11 +10988,15 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: number
     email: string
-    password: string
+    password?: string | null
     name: string
     role?: string
     avatar?: string | null
+    googleId?: string | null
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: string | null
+    verificationExpires?: Date | string | null
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
     createdAt?: Date | string
@@ -10870,11 +11006,15 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10885,11 +11025,15 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10900,11 +11044,15 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: number
     email: string
-    password: string
+    password?: string | null
     name: string
     role?: string
     avatar?: string | null
+    googleId?: string | null
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: string | null
+    verificationExpires?: Date | string | null
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
     createdAt?: Date | string
@@ -10913,11 +11061,15 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10927,11 +11079,15 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11193,6 +11349,8 @@ export namespace Prisma {
     userId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    paymentMethod?: SortOrder
+    paymentRef?: SortOrder
     street?: SortOrder
     city?: SortOrder
     postalCode?: SortOrder
@@ -11213,6 +11371,8 @@ export namespace Prisma {
     userId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    paymentMethod?: SortOrder
+    paymentRef?: SortOrder
     street?: SortOrder
     city?: SortOrder
     postalCode?: SortOrder
@@ -11227,6 +11387,8 @@ export namespace Prisma {
     userId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    paymentMethod?: SortOrder
+    paymentRef?: SortOrder
     street?: SortOrder
     city?: SortOrder
     postalCode?: SortOrder
@@ -11429,7 +11591,11 @@ export namespace Prisma {
     name?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
+    googleId?: SortOrder
     isActive?: SortOrder
+    isVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationExpires?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
     createdAt?: SortOrder
@@ -11447,7 +11613,11 @@ export namespace Prisma {
     name?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
+    googleId?: SortOrder
     isActive?: SortOrder
+    isVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationExpires?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
     createdAt?: SortOrder
@@ -11461,7 +11631,11 @@ export namespace Prisma {
     name?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
+    googleId?: SortOrder
     isActive?: SortOrder
+    isVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationExpires?: SortOrder
     resetToken?: SortOrder
     resetTokenExpiry?: SortOrder
     createdAt?: SortOrder
@@ -11867,11 +12041,15 @@ export namespace Prisma {
 
   export type UserCreateWithoutOrderInput = {
     email: string
-    password: string
+    password?: string | null
     name: string
     role?: string
     avatar?: string | null
+    googleId?: string | null
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: string | null
+    verificationExpires?: Date | string | null
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
     createdAt?: Date | string
@@ -11881,11 +12059,15 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutOrderInput = {
     id?: number
     email: string
-    password: string
+    password?: string | null
     name: string
     role?: string
     avatar?: string | null
+    googleId?: string | null
     isActive?: boolean
+    isVerified?: boolean
+    verificationToken?: string | null
+    verificationExpires?: Date | string | null
     resetToken?: string | null
     resetTokenExpiry?: Date | string | null
     createdAt?: Date | string
@@ -11933,11 +12115,15 @@ export namespace Prisma {
 
   export type UserUpdateWithoutOrderInput = {
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11947,11 +12133,15 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutOrderInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resetToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11988,6 +12178,8 @@ export namespace Prisma {
   export type OrderCreateWithoutOrderItemInput = {
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -12003,6 +12195,8 @@ export namespace Prisma {
     userId: number
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -12061,6 +12255,8 @@ export namespace Prisma {
   export type OrderUpdateWithoutOrderItemInput = {
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12076,6 +12272,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12163,6 +12361,8 @@ export namespace Prisma {
   export type OrderCreateWithoutUserInput = {
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -12177,6 +12377,8 @@ export namespace Prisma {
     id?: number
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -12221,6 +12423,8 @@ export namespace Prisma {
     userId?: IntFilter<"Order"> | number
     total?: IntFilter<"Order"> | number
     status?: StringFilter<"Order"> | string
+    paymentMethod?: StringNullableFilter<"Order"> | string | null
+    paymentRef?: StringNullableFilter<"Order"> | string | null
     street?: StringNullableFilter<"Order"> | string | null
     city?: StringNullableFilter<"Order"> | string | null
     postalCode?: StringNullableFilter<"Order"> | string | null
@@ -12288,6 +12492,8 @@ export namespace Prisma {
     id?: number
     total: number
     status?: string
+    paymentMethod?: string | null
+    paymentRef?: string | null
     street?: string | null
     city?: string | null
     postalCode?: string | null
@@ -12300,6 +12506,8 @@ export namespace Prisma {
   export type OrderUpdateWithoutUserInput = {
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12314,6 +12522,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12328,6 +12538,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     postalCode?: NullableStringFieldUpdateOperationsInput | string | null
